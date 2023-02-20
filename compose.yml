@@ -1,0 +1,34 @@
+services:
+  torch:
+    runtime: nvidia
+    build: ./torch
+    image: nvidia_torch_1_13
+    ipc: host
+    volumes:
+      - ./../3d-detection-pipeline:/home/robesafe/3d-detection-pipeline
+      - ./../Datasets:/home/robesafe/Datasets
+      - /media/robesafe/SSD_SATA/:/media/robesafe/SSD_SATA/
+      - /home/robesafe/Miguel/Pseudo_Lidar_V2:/home/robesafe/Miguel/Pseudo_Lidar_V2
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility,graphics,display
+    entrypoint: /bin/bash
+
+  mayavi:
+    runtime: nvidia
+    build: ./mayavi_vis
+    image: mayavi_vis
+    ipc: host
+    volumes:
+      - ./../3d-detection-pipeline:/home/robesafe/3d-detection-pipeline
+      - ./../Datasets:/home/robesafe/Datasets
+      - /media/robesafe/SSD_SATA/KITTI_DATASET:/media/robesafe/SSD_SATA/KITTI_DATASET
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - ~/.Xauthority:/root/.Xauthority
+    network_mode: "host"
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility,graphics,display
+      - DISPLAY=unix$DISPLAY
+      - XAUTHORITY=/home/robesafe/.Xauthority
+    entrypoint: /bin/bash

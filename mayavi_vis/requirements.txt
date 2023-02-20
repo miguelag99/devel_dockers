@@ -1,0 +1,6 @@
+PyQt5
+mayavi
+numpy
+pillow
+scipy
+pandas

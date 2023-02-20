@@ -1,0 +1,6 @@
+configargparse
+scikit-image
+ruamel.yaml
+albumentations
+timm
+pytorch_lightning
